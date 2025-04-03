@@ -14,10 +14,11 @@ private:
 public:
     Matriz();
     void carregarArquivo(const string &caminhoArquivo);
+    void imprimirMapa() const;
+    vector<vector<int>> &getMapa() { return mapa; }
     int getLinhas() const;
     int getColunas() const;
     int getLinhaInitChama() const;
     int getColunaInitChama() const;
-    
 };
 #endif

@@ -12,40 +12,34 @@ Matriz::Matriz()
     mapa.resize(linhas, vector<int>(colunas, 0));
 }
 
-void Matriz::carregarArquivo(const string &caminhoArquivo)
-{
+void Matriz::carregarArquivo(const string &caminhoArquivo) {
     ifstream arquivo(caminhoArquivo);
-
-    if (!arquivo.is_open())
-    {
+    if (!arquivo) {
         cerr << "Erro ao abrir o arquivo: " << caminhoArquivo << endl;
         return;
     }
 
-    // Dimensões da matriz e posição inicial
-    string linha;
+    arquivo >> this->linhas >> this->colunas >> this->linhaInitChama >> this->colunaInitChama;
+    mapa.assign(this->linhas, vector<int>(this->colunas));
 
-    getline(arquivo, linha);
-    istringstream dimensoes(linha);
-    dimensoes >> this->linhas >> this->colunas;
+    for (auto &linha : mapa) {
+        for (auto &celula : linha) {
+            arquivo >> celula;
+        }
+    }
+}
 
-    getline(arquivo, linha);
-    dimensoes.clear();
-    dimensoes.str(linha);
-    dimensoes >> this->linhaInitChama >> this->colunaInitChama;
 
-    // Alocação da matriz
-    mapa.resize(this->linhas, vector<int>(this->colunas, 0));
-
+void Matriz::imprimirMapa() const
+{
     for (int i = 0; i < linhas; i++)
     {
         for (int j = 0; j < colunas; j++)
         {
-            arquivo >> mapa[i][j];
+            cout << mapa[i][j] << " ";
         }
+        cout << endl;
     }
-
-    arquivo.close();
 }
 
 int Matriz::getLinhas() const { return linhas; }

@@ -1,14 +1,16 @@
 #include <iostream>
 #include "Matriz.hpp"
+#include "Incendio.hpp"
 using namespace std;
 
 int main() {
     string nomeArquivo = "./input/input.dat";
     Matriz mapa;
     mapa.carregarArquivo(nomeArquivo);
-    cout << mapa.getLinhas() << endl;
-    cout << mapa.getColunas() << endl;
-    cout << mapa.getLinhaInitChama() << endl;
-    cout << mapa.getColunaInitChama() << endl;
+    Incendio incendio(mapa);
+
+    cout << endl;
+    incendio.Propagar();
+
     return 0;
 }

@@ -9,6 +9,7 @@ private:
     {
         int x, y;
     };
+    vector<Posicao> fogosAtt;
     queue<Posicao> fogos;
     Matriz &floresta;
     bool vento[4];

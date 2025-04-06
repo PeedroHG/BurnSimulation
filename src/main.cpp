@@ -9,8 +9,10 @@ int main() {
     mapa.carregarArquivo(nomeArquivo);
     Incendio incendio(mapa);
 
-    cout << endl;
-    incendio.Propagar();
+    for(int i = 0; i < 6; i++){
+        cout << endl;
+        incendio.Propagar();
+    }
 
     return 0;
 }

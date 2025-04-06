@@ -19,8 +19,9 @@ void Incendio::Propagar()
 {
     int dx[] = {-1, 1, 0, 0};
     int dy[] = {0, 0, -1, 1};
-
     auto &mapa = floresta.getMapa();
+
+    queue<Posicao> novosFocos;
 
     while (!fogos.empty())
     {
@@ -34,11 +35,18 @@ void Incendio::Propagar()
             if (verificaPropagacao(nx, ny))
             {
                 mapa[nx][ny] = 2;
-                fogos.push({nx, ny});
+                novosFocos.push({nx, ny});
             }
         }
-
-        floresta.imprimirMapa();
-        cout << endl;
     }
+
+    floresta.imprimirMapa();
+
+    while (!novosFocos.empty())
+    {   
+        fogos.push(novosFocos.front());
+        mapa[novosFocos.front().x][novosFocos.front().y] = 3;
+        novosFocos.pop();
+    }
+     
 }

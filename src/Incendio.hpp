@@ -2,6 +2,9 @@
 #include "Matriz.hpp"
 #include <queue>
 
+#ifndef INCENDIO_HPP
+#define INCENDIO_HPP
+
 class Incendio
 {
 private:
@@ -20,3 +23,5 @@ public:
     bool verificaPropagacao(int x, int y);
     void Propagar();
 };
+
+#endif

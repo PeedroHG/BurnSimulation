@@ -18,41 +18,31 @@ bool Incendio::verificaPropagacao(int x, int y)
 
 void Incendio::configuraVento(vector<Posicao> &direcoes)
 {
-    if (!VENTO_ESQUERDA && !VENTO_DIREITA && !VENTO_BAIXO && !VENTO_CIMA)
-    {
-        direcoes = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
-    }
-    else if (VENTO_ESQUERDA && VENTO_DIREITA)
+    if (VENTO_ESQUERDA && VENTO_DIREITA)
     {
         cout << "Vento configurado para duas direções opostas ao mesmo tempo: esquerda e direita.\n";
         exit(0);
     }
-    else if (VENTO_BAIXO && VENTO_CIMA)
+    if (VENTO_CIMA && VENTO_BAIXO)
     {
-        cout << "Vento configurado para duas direções opostas ao mesmo tempo: baixo e cima.\n";
+        cout << "Vento configurado para duas direções opostas ao mesmo tempo: cima e baixo.\n";
         exit(0);
     }
-    else
+
+    if (VENTO_ESQUERDA)
+        direcoes.push_back({0, -1});
+    if (VENTO_DIREITA)
+        direcoes.push_back({0, 1});
+    if (VENTO_CIMA)
+        direcoes.push_back({-1, 0});
+    if (VENTO_BAIXO)
+        direcoes.push_back({1, 0});
+
+    if (direcoes.empty())
     {
-        if (VENTO_ESQUERDA)
-        {
-            direcoes.push_back({0, -1});
-        }
-        if (VENTO_DIREITA)
-        {
-            direcoes.push_back({0, 1});
-        }
-        if (VENTO_BAIXO)
-        {
-            
-            direcoes.push_back({1, 0});
-        }
-        if (VENTO_CIMA)
-        {
-            direcoes.push_back({-1, 0});
-        }
+        direcoes = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
     }
-};
+}
 
 void Incendio::Propagar()
 {

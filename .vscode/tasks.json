@@ -42,9 +42,9 @@
             "detail": "Tarefa gerada pelo Depurador."
         },
         {
-            "label": "make run",
+            "label": "make all",
             "type": "shell",
-            "command": "make run",
+            "command": "make all",
             "group": {
                 "kind": "build",
                 "isDefault": true

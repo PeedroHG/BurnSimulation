@@ -16,6 +16,7 @@ private:
 
 public:
     Incendio(Matriz &matriz);
+    void configuraVento(vector<Posicao> &direcoes);
     bool verificaPropagacao(int x, int y);
     void Propagar();
 };

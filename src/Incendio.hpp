@@ -12,7 +12,7 @@ private:
     {
         int x, y;
     };
-    vector<Posicao> fogosAtt;
+    queue<Posicao> fogosAtt;
     queue<Posicao> fogos;
     Matriz &floresta;
     bool vento[4];
@@ -22,6 +22,7 @@ public:
     void configuraVento(vector<Posicao> &direcoes);
     bool verificaPropagacao(int x, int y);
     void Propagar();
+    void Queimar();
 };
 
 #endif

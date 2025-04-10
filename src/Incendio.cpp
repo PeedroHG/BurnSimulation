@@ -9,7 +9,7 @@ Incendio::Incendio(Matriz &matriz) : floresta(matriz)
 
 bool Incendio::verificaPropagacao(int x, int y)
 {
-    if (x >= 0 && x < floresta.getLinhas() && y >= 0 && y < floresta.getColunas() && floresta.getMapa()[x][y] != 0 && floresta.getMapa()[x][y] != 2 && floresta.getMapa()[x][y] != 3 && floresta.getMapa()[x][y] != 4)
+    if (x >= 0 && x < floresta.getLinhas() && y >= 0 && y < floresta.getColunas() && floresta.getMapa()[x][y] != 0 && floresta.getMapa()[x][y] != 2 && floresta.getMapa()[x][y] != 3 && floresta.getMapa()[x][y] != 4 && floresta.getMapa()[x][y] != 7)
     {
         return true;
     }
@@ -51,8 +51,6 @@ void Incendio::Propagar()
 
     auto &mapa = floresta.getMapa();
 
-    queue<Posicao> novosFocos;
-
     while (!fogos.empty())
     {
         Posicao atual = fogos.front();
@@ -65,17 +63,20 @@ void Incendio::Propagar()
             if (verificaPropagacao(nx, ny))
             {
                 mapa[nx][ny] = 2;
-                novosFocos.push({nx, ny});
+                fogosAtt.push({nx, ny});
             }
         }
     }
+}
 
-    floresta.imprimirMapa();
+void Incendio::Queimar()
+{
+    auto &mapa = floresta.getMapa();
 
-    while (!novosFocos.empty())
+    while (!fogosAtt.empty())
     {
-        fogos.push(novosFocos.front());
-        mapa[novosFocos.front().x][novosFocos.front().y] = 3;
-        novosFocos.pop();
+        fogos.push(fogosAtt.front());
+        mapa[fogosAtt.front().x][fogosAtt.front().y] = 3;
+        fogosAtt.pop();
     }
 }

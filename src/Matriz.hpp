@@ -10,6 +10,7 @@ private:
     vector<vector<int>> mapa;
     int linhas, colunas;
     int linhaInitChama, colunaInitChama;
+    int linhaInitAnimal, colunaInitAnimal;
 
 public:
     Matriz();
@@ -20,5 +21,7 @@ public:
     int getColunas() const;
     int getLinhaInitChama() const;
     int getColunaInitChama() const;
+    int getLinhaInitAnimal() const;
+    int getColunaInitAnimal() const;
 };
 #endif

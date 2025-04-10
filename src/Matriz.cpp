@@ -19,7 +19,7 @@ void Matriz::carregarArquivo(const string &caminhoArquivo) {
         return;
     }
 
-    arquivo >> this->linhas >> this->colunas >> this->linhaInitChama >> this->colunaInitChama;
+    arquivo >> this->linhas >> this->colunas >> this->linhaInitChama >> this->colunaInitChama >> this->linhaInitAnimal >> this->colunaInitAnimal;
     mapa.assign(this->linhas, vector<int>(this->colunas));
 
     for (auto &linha : mapa) {
@@ -28,7 +28,6 @@ void Matriz::carregarArquivo(const string &caminhoArquivo) {
         }
     }
 }
-
 
 void Matriz::imprimirMapa() const
 {
@@ -49,3 +48,7 @@ int Matriz::getColunas() const { return colunas; }
 int Matriz::getLinhaInitChama() const { return linhaInitChama; }
 
 int Matriz::getColunaInitChama() const { return colunaInitChama; }
+
+int Matriz::getLinhaInitAnimal() const { return linhaInitAnimal; }
+
+int Matriz::getColunaInitAnimal() const { return colunaInitAnimal; }

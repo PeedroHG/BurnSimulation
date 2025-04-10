@@ -13,11 +13,8 @@ public:
     int tipoCampoAtual;
     Matriz &floresta;
     vector<vector<bool>> visitados = vector<vector<bool>>(floresta.getLinhas(), vector<bool>(floresta.getColunas(), false));
-
-    vector<Posicao> scanPosicoesSeguras();
 public:
     Animal(Matriz &matriz);
-    void posicionaAnimal();
     void movimentaAnimal();
 };
 

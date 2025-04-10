@@ -13,8 +13,10 @@ public:
     int tipoCampoAtual;
     Matriz &floresta;
     vector<vector<bool>> visitados = vector<vector<bool>>(floresta.getLinhas(), vector<bool>(floresta.getColunas(), false));
+
 public:
     Animal(Matriz &matriz);
+    Posicao escolherMelhorPosicao(const vector<Posicao> &posicoes);
     void movimentaAnimal();
 };
 

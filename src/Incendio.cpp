@@ -4,8 +4,16 @@
 
 Incendio::Incendio(Matriz &matriz) : floresta(matriz)
 {
-    fogos.push({matriz.getLinhaInitChama(), matriz.getColunaInitChama()});
+    int x = matriz.getLinhaInitChama();
+    int y = matriz.getColunaInitChama();
+
+    Posicao inicio = {x, y};
+
+    fogos.push(inicio);
+    fogosAtt.push(inicio);
+    matriz.getMapa()[x][y] = 2; 
 }
+
 
 bool Incendio::verificaPropagacao(int x, int y)
 {
@@ -45,7 +53,8 @@ void Incendio::configuraVento(vector<Posicao> &direcoes)
 }
 
 void Incendio::Propagar()
-{
+{   
+    Queimar();
     vector<Posicao> direcoes;
     configuraVento(direcoes);
 

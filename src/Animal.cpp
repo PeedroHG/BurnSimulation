@@ -33,45 +33,33 @@ void Animal::movimentaAnimal()
 
     Posicao next = {-1, -1};
 
-    unsigned int aux = visaoAnimal.size();
-    unsigned int aux2 = 0;
 
-    for (const auto& pos : visaoAnimal) {
-        std::cout << "Visao Animal - x: " << pos.x << ", y: " << pos.y << std::endl;
-    }
-
-    for (Posicao d : visaoAnimal)
-    {
-        cout << d.x << " " << d.y << endl;
-
-        if (mapa[d.x][d.y] == 4)
-        {
-            next = d;
-            break;
-        }
-        else if (mapa[d.x][d.y] == 0 || mapa[d.x][d.y] == 1)
-        {
-            next = d;
-            break;
-        }
-        else if (mapa[d.x][d.y] == 3)
-        {
-            next = d;
-            break;
-        }
-        else
-        {
-            aux2++;
-            continue;
-        }
-    }
-
-    if(aux2 == aux) {
-        cout << "Animal morto" << endl;
-    }
+    next = escolherMelhorPosicao(visaoAnimal);
 
     tipoCampoAtual = mapa[next.x][next.y];
     mapa[next.x][next.y] = 7;
     mapa[posicaoAnimal.x][posicaoAnimal.y] = tipoCampoAtual;
     posicaoAnimal = next;
+}
+
+Animal::Posicao Animal::escolherMelhorPosicao(const vector<Posicao>& posicoes) {
+    const auto& mapa = floresta.getMapa();
+    Posicao melhorPosicao = {-1, -1};
+    int melhorPrioridade = -1;
+
+    for (const auto& pos : posicoes) {
+        int valor = mapa[pos.x][pos.y];
+
+        int prioridade = -1;
+        if (valor == 4)            prioridade = 3;
+        else if (valor == 0 || valor == 1) prioridade = 2;
+        else if (valor == 3)       prioridade = 1;
+
+        if (prioridade > melhorPrioridade) {
+            melhorPrioridade = prioridade;
+            melhorPosicao = pos;
+        }
+    }
+
+    return melhorPosicao;
 }

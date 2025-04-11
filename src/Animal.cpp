@@ -1,5 +1,7 @@
 #include "Animal.hpp"
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include <random>
 
 Animal::Animal(Matriz &matriz) : floresta(matriz)
@@ -27,6 +29,17 @@ void Animal::movimentaAnimal()
 
     vector<Posicao> direcoes = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
     vector<Posicao> visaoAnimal;
+
+    if (tipoCampoAnterior == 0 && esperaRestante > 0)
+    {
+        //int sorteio = rand() % 2;
+        int sorteio = 1;
+        if(sorteio == 1)
+        {
+            esperaRestante--;
+            return;
+        }
+    }
 
     for (Posicao d : direcoes)
     {
@@ -60,7 +73,8 @@ void Animal::movimentaAnimal()
     posicaoAnimal = next;
     passos++;
 
-    if (tipoCampoAnterior == 4) {
+    if (tipoCampoAnterior == 4)
+    {
         tipoCampoAnterior = 0;
         dispersaUmidade();
     }

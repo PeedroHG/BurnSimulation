@@ -22,6 +22,7 @@ void Matriz::carregarArquivo(const string &caminhoArquivo) {
     arquivo >> this->linhas >> this->colunas >> this->linhaInitChama >> this->colunaInitChama >> this->linhaInitAnimal >> this->colunaInitAnimal;
     mapa.assign(this->linhas, vector<int>(this->colunas));
 
+    mapa[this->linhaInitChama][this->colunaInitChama] = 2;
     for (auto &linha : mapa) {
         for (auto &celula : linha) {
             arquivo >> celula;

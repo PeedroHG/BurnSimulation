@@ -11,6 +11,7 @@ public:
     };
     Posicao posicaoAnimal;
     int tipoCampoAnterior;
+    int esperaRestante = 2;
     int passos = 0;
     Matriz &floresta;
     vector<vector<bool>> visitados = vector<vector<bool>>(floresta.getLinhas(), vector<bool>(floresta.getColunas(), false));

@@ -10,6 +10,7 @@ using namespace std;
 
 int main()
 {
+    srand(time(0));
     string nomeArquivo = "./input/input.dat";
     Matriz mapa;
     mapa.carregarArquivo(nomeArquivo);

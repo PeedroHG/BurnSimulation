@@ -20,7 +20,7 @@ private:
 public:
     Incendio(Matriz &matriz);
     void configuraVento(vector<Posicao> &direcoes);
-    bool verificaPropagacao(int x, int y);
+    int verificaPropagacao(int x, int y);
     bool Propagar();
     void Queimar();
 };

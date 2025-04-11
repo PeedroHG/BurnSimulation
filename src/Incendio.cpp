@@ -11,17 +11,23 @@ Incendio::Incendio(Matriz &matriz) : floresta(matriz)
 
     fogos.push(inicio);
     fogosAtt.push(inicio);
-    matriz.getMapa()[x][y] = 2; 
+    matriz.getMapa()[x][y] = 2;
 }
 
-
-bool Incendio::verificaPropagacao(int x, int y)
+int Incendio::verificaPropagacao(int x, int y)
 {
-    if (x >= 0 && x < floresta.getLinhas() && y >= 0 && y < floresta.getColunas() && floresta.getMapa()[x][y] != 0 && floresta.getMapa()[x][y] != 2 && floresta.getMapa()[x][y] != 3 && floresta.getMapa()[x][y] != 4 && floresta.getMapa()[x][y] != 7)
-    {
-        return true;
-    }
-    return false;
+    if (x < 0 || x >= floresta.getLinhas() || y < 0 || y >= floresta.getColunas())
+        return 0;
+
+    int valor = floresta.getMapa()[x][y];
+
+    if (valor == 1)
+        return 1; // pode propagar
+
+    if (valor == 7)
+        return 2; // tentou atingir o animal
+
+    return 0; // demais casos: água, queimado, vazio, fogo, etc.
 }
 
 void Incendio::configuraVento(vector<Posicao> &direcoes)
@@ -53,12 +59,12 @@ void Incendio::configuraVento(vector<Posicao> &direcoes)
 }
 
 bool Incendio::Propagar()
-{   
+{
     Queimar();
 
     vector<Posicao> direcoes;
     configuraVento(direcoes);
-
+    bool morto = false;
     auto &mapa = floresta.getMapa();
     bool houvePropagacao = false;
 
@@ -71,15 +77,26 @@ bool Incendio::Propagar()
         {
             int nx = atual.x + d.x;
             int ny = atual.y + d.y;
-            if (verificaPropagacao(nx, ny))
+
+            int resultadoPropagacao = verificaPropagacao(nx, ny);
+
+            if (resultadoPropagacao == 1)
             {
                 mapa[nx][ny] = 2;
                 fogosAtt.push({nx, ny});
-                houvePropagacao = true; 
+                houvePropagacao = true;
+            }
+            else if (resultadoPropagacao == 2)
+            {
+                morto = true;
             }
         }
     }
 
+    if (morto)
+    {
+        cout << "Animal morreu queimado e tem mais uma vida!\n";
+    }
     return houvePropagacao;
 }
 
@@ -92,7 +109,8 @@ void Incendio::Queimar()
         Posicao p = fogosAtt.front();
         fogosAtt.pop();
 
-        if (mapa[p.x][p.y] == 2) {
+        if (mapa[p.x][p.y] == 2)
+        {
             mapa[p.x][p.y] = 3;
             fogos.push(p);
         }

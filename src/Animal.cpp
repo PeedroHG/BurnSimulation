@@ -4,9 +4,20 @@
 
 Animal::Animal(Matriz &matriz) : floresta(matriz)
 {
-    this->posicaoAnimal = {matriz.getLinhaInitAnimal(), matriz.getColunaInitAnimal()};
-    tipoCampoAtual = floresta.getMapa()[posicaoAnimal.x][posicaoAnimal.y];
-    floresta.getMapa()[posicaoAnimal.x][posicaoAnimal.y] = 7;
+    int x = matriz.getLinhaInitAnimal();
+    int y = matriz.getColunaInitAnimal();
+
+    posicaoAnimal = {x, y};
+
+    auto &mapa = floresta.getMapa();
+    tipoCampoAnterior = mapa[x][y];
+    mapa[x][y] = 7;
+}
+
+bool Animal::dentroDosLimites(int x, int y)
+{
+    return x >= 0 && x < floresta.getLinhas() &&
+           y >= 0 && y < floresta.getColunas();
 }
 
 void Animal::movimentaAnimal()
@@ -21,41 +32,77 @@ void Animal::movimentaAnimal()
     {
         int nx = posicaoAnimal.x + d.x;
         int ny = posicaoAnimal.y + d.y;
-        if (nx < 0 || nx >= floresta.getLinhas() || ny < 0 || ny >= floresta.getColunas() || visitados[nx][ny] == true || mapa[nx][ny] == 2)
+
+        if (dentroDosLimites(nx, ny) && visitados[nx][ny] == false && mapa[nx][ny] != 2)
         {
-            continue;
+            visaoAnimal.push_back({nx, ny});
         }
         else
         {
-            visaoAnimal.push_back({nx, ny});
-        };
+            continue;
+        }
     }
 
     Posicao next = {-1, -1};
 
-
     next = escolherMelhorPosicao(visaoAnimal);
 
-    tipoCampoAtual = mapa[next.x][next.y];
+    // Volta o mapa para o campo anterior
+    mapa[posicaoAnimal.x][posicaoAnimal.y] = tipoCampoAnterior;
+
+    // Guarda o tipo do campo q ta indo
+    tipoCampoAnterior = mapa[next.x][next.y];
+
+    // Atualiza a matriz com o animal
     mapa[next.x][next.y] = 7;
-    mapa[posicaoAnimal.x][posicaoAnimal.y] = tipoCampoAtual;
+
+    // Atualiza o animal
     posicaoAnimal = next;
+    passos++;
+
+    if (tipoCampoAnterior == 4) {
+        tipoCampoAnterior = 0;
+        dispersaUmidade();
+    }
 }
 
-Animal::Posicao Animal::escolherMelhorPosicao(const vector<Posicao>& posicoes) {
-    const auto& mapa = floresta.getMapa();
+void Animal::dispersaUmidade()
+{
+    auto &mapa = floresta.getMapa();
+    vector<Posicao> direcoes = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+    for (Posicao d : direcoes)
+    {
+        int nx = posicaoAnimal.x + d.x;
+        int ny = posicaoAnimal.y + d.y;
+
+        if (dentroDosLimites(nx, ny))
+        {
+            mapa[nx][ny] = 1;
+        }
+    }
+}
+
+Animal::Posicao Animal::escolherMelhorPosicao(const vector<Posicao> &posicoes)
+{
+    const auto &mapa = floresta.getMapa();
     Posicao melhorPosicao = {-1, -1};
     int melhorPrioridade = -1;
 
-    for (const auto& pos : posicoes) {
+    for (const auto &pos : posicoes)
+    {
         int valor = mapa[pos.x][pos.y];
 
         int prioridade = -1;
-        if (valor == 4)            prioridade = 3;
-        else if (valor == 0 || valor == 1) prioridade = 2;
-        else if (valor == 3)       prioridade = 1;
+        if (valor == 4)
+            prioridade = 3;
+        else if (valor == 0 || valor == 1)
+            prioridade = 2;
+        else if (valor == 3)
+            prioridade = 1;
 
-        if (prioridade > melhorPrioridade) {
+        if (prioridade > melhorPrioridade)
+        {
             melhorPrioridade = prioridade;
             melhorPosicao = pos;
         }

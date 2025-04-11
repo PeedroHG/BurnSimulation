@@ -52,13 +52,15 @@ void Incendio::configuraVento(vector<Posicao> &direcoes)
     }
 }
 
-void Incendio::Propagar()
+bool Incendio::Propagar()
 {   
     Queimar();
+
     vector<Posicao> direcoes;
     configuraVento(direcoes);
 
     auto &mapa = floresta.getMapa();
+    bool houvePropagacao = false;
 
     while (!fogos.empty())
     {
@@ -73,9 +75,12 @@ void Incendio::Propagar()
             {
                 mapa[nx][ny] = 2;
                 fogosAtt.push({nx, ny});
+                houvePropagacao = true; 
             }
         }
     }
+
+    return houvePropagacao;
 }
 
 void Incendio::Queimar()
@@ -84,8 +89,12 @@ void Incendio::Queimar()
 
     while (!fogosAtt.empty())
     {
-        fogos.push(fogosAtt.front());
-        mapa[fogosAtt.front().x][fogosAtt.front().y] = 3;
+        Posicao p = fogosAtt.front();
         fogosAtt.pop();
+
+        if (mapa[p.x][p.y] == 2) {
+            mapa[p.x][p.y] = 3;
+            fogos.push(p);
+        }
     }
 }

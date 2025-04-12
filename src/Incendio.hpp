@@ -7,13 +7,15 @@
 
 class Incendio
 {
-private:
+public:
     struct Posicao
     {
         int x, y;
     };
-    queue<Posicao> fogosAtt;
+
+private:
     queue<Posicao> fogos;
+    queue<Posicao> fogosAtt;
     Matriz &floresta;
     bool vento[4];
 
@@ -21,8 +23,11 @@ public:
     Incendio(Matriz &matriz);
     void configuraVento(vector<Posicao> &direcoes);
     int verificaPropagacao(int x, int y);
-    bool Propagar();
+    int Propagar();
     void Queimar();
+
+    queue<Posicao> &getFogos() { return fogos; }
+    queue<Posicao> &getFogosAtt() { return fogosAtt; }
 };
 
 #endif

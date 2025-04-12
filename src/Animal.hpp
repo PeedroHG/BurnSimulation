@@ -10,6 +10,7 @@ public:
         int x, y;
     };
     Posicao posicaoAnimal;
+    string estadoAnimal = "Vivo";
     int tipoCampoAnterior;
     int esperaRestante = 2;
     int passos = 0;
@@ -22,7 +23,13 @@ public:
     Posicao escolherMelhorPosicao(const vector<Posicao> &posicoes);
     void dispersaUmidade();
     void movimentaAnimal();
+    bool estaCercadoPorFogo();
 
+    string getEstadoAnimal() const { return estadoAnimal; }
+    void setEstadoAnimal(const string &estado) { estadoAnimal = estado; }
+    Posicao getPosicaoDoAnimal() const { return posicaoAnimal; }
+    void setTipoCampoAnterior(int tipo) { tipoCampoAnterior = tipo; }
+    void setEsperaRestante(int espera) { esperaRestante = espera; }
     int getPassos() const { return passos; }
 };
 

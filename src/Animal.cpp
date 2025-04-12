@@ -22,6 +22,31 @@ bool Animal::dentroDosLimites(int x, int y)
            y >= 0 && y < floresta.getColunas();
 }
 
+bool Animal::estaCercadoPorFogo() {
+    int x = posicaoAnimal.x;
+    int y = posicaoAnimal.y;
+
+    int fogoAoRedor = 0;
+    int vizinhosValidos = 0;
+
+    int dx[] = {-1, 1, 0, 0}; // cima, baixo, esquerda, direita
+    int dy[] = {0, 0, -1, 1};
+
+    for (int i = 0; i < 4; i++) {
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+
+        if (dentroDosLimites(nx, ny)) {
+            vizinhosValidos++;
+            if (floresta.getMapa()[nx][ny] == 2) {  // se for fogo
+                fogoAoRedor++;
+            }
+        }
+    }
+
+    return vizinhosValidos > 0 && fogoAoRedor == vizinhosValidos;
+}
+
 void Animal::movimentaAnimal()
 {
     auto &mapa = floresta.getMapa();
@@ -32,8 +57,7 @@ void Animal::movimentaAnimal()
 
     if (tipoCampoAnterior == 0 && esperaRestante > 0)
     {
-        //int sorteio = rand() % 2;
-        int sorteio = 1;
+        int sorteio = rand() % 2;
         if(sorteio == 1)
         {
             esperaRestante--;

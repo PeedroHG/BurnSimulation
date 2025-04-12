@@ -58,7 +58,7 @@ void Incendio::configuraVento(vector<Posicao> &direcoes)
     }
 }
 
-bool Incendio::Propagar()
+int Incendio::Propagar()
 {
     Queimar();
 
@@ -66,7 +66,7 @@ bool Incendio::Propagar()
     configuraVento(direcoes);
     bool morto = false;
     auto &mapa = floresta.getMapa();
-    bool houvePropagacao = false;
+    int houvePropagacao = 0;
 
     while (!fogos.empty())
     {
@@ -84,7 +84,7 @@ bool Incendio::Propagar()
             {
                 mapa[nx][ny] = 2;
                 fogosAtt.push({nx, ny});
-                houvePropagacao = true;
+                houvePropagacao = 1;
             }
             else if (resultadoPropagacao == 2)
             {
@@ -94,8 +94,8 @@ bool Incendio::Propagar()
     }
 
     if (morto)
-    {
-        cout << "Animal morreu queimado e tem mais uma vida!\n";
+    {   
+        houvePropagacao = 2;
     }
     return houvePropagacao;
 }

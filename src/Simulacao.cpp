@@ -16,7 +16,7 @@ void Simulacao::Simular()
 {
     auto &mapa = floresta.getMapa();
 
-    ofstream arquivo("output.dat");
+    ofstream arquivo("./output/output.dat");
     if (!arquivo.is_open())
     {
         cerr << "Erro ao abrir o arquivo output.dat\n";

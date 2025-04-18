@@ -1,4 +1,5 @@
 #include "Matriz.hpp"
+#include "Config.hpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -12,9 +13,11 @@ Matriz::Matriz()
     mapa.resize(linhas, vector<int>(colunas, 0));
 }
 
-void Matriz::carregarArquivo(const string &caminhoArquivo) {
+void Matriz::carregarArquivo(const string &caminhoArquivo)
+{
     ifstream arquivo(caminhoArquivo);
-    if (!arquivo) {
+    if (!arquivo)
+    {
         cerr << "Erro ao abrir o arquivo: " << caminhoArquivo << endl;
         return;
     }
@@ -23,25 +26,98 @@ void Matriz::carregarArquivo(const string &caminhoArquivo) {
     mapa.assign(this->linhas, vector<int>(this->colunas));
 
     mapa[this->linhaInitChama][this->colunaInitChama] = 2;
-    for (auto &linha : mapa) {
-        for (auto &celula : linha) {
+    for (auto &linha : mapa)
+    {
+        for (auto &celula : linha)
+        {
             arquivo >> celula;
         }
     }
-}
 
-void Matriz::imprimirMapa() const
-{
-    for (int i = 0; i < linhas; i++)
+    if (mapa[this->linhaInitAnimal][this->colunaInitAnimal] != 0 && mapa[this->linhaInitAnimal][this->colunaInitAnimal] != 1)
     {
-        for (int j = 0; j < colunas; j++)
-        {
-            cout << mapa[i][j] << " ";
-        }
-        cout << endl;
+        cerr << "Erro: A posicao inicial do animal nao esta sobre um campo (0) ou (1)." << endl;
+        exit(1);
     }
 }
 
+void Matriz::imprimirMapaTerminal()
+{
+    for (auto &linha : mapa)
+    {
+        for (auto &valor : linha)
+        {
+            if (valor == 0)
+            {
+                cout << EMPTY_SYMBOL;
+            }
+            else if (valor == 1)
+            {
+                cout << TREE_SYMBOL;
+            }
+            else if (valor == 2)
+            {
+                cout << BURNING_SYMBOL;
+            }
+            else if (valor == 3)
+            {
+                cout << BURNT_SYMBOL;
+            }
+            else if (valor == 4)
+            {
+                cout << WATER_SYMBOL;
+            }
+            else if (valor == 7)
+            {
+                cout << ANIMAL_SYMBOL;
+            }
+            else if (valor == 9)
+            {
+                cout << DEAD_ANIMAL_SYMBOL;
+            }
+        }
+        cout << "\n";
+    }
+}
+
+void Matriz::imprimirMapaArquivo(ofstream &arquivo)
+{
+    for (auto &linha : mapa)
+    {
+        for (auto &valor : linha)
+        {
+            if (valor == 0)
+            {
+                arquivo << EMPTY_SYMBOL;
+            }
+            else if (valor == 1)
+            {
+                arquivo << TREE_SYMBOL;
+            }
+            else if (valor == 2)
+            {
+                arquivo << BURNING_SYMBOL;
+            }
+            else if (valor == 3)
+            {
+                arquivo << BURNT_SYMBOL;
+            }
+            else if (valor == 4)
+            {
+                arquivo << WATER_SYMBOL;
+            }
+            else if (valor == 7)
+            {
+                arquivo << ANIMAL_SYMBOL;
+            }
+            else if (valor == 9)
+            {
+                arquivo << DEAD_ANIMAL_SYMBOL;
+            }
+        }
+        arquivo << "\n";
+    }
+}
 int Matriz::getLinhas() const { return linhas; }
 
 int Matriz::getColunas() const { return colunas; }

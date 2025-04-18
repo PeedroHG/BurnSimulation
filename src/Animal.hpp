@@ -1,4 +1,5 @@
 #include "Matriz.hpp"
+#include <fstream>
 #ifndef ANIMAL_HPP
 #define ANIMAL_HPP
 
@@ -15,6 +16,7 @@ public:
     int esperaRestante = 2;
     int passos = 0;
     Matriz &floresta;
+    vector<Posicao> caminhoAnimal;
     vector<vector<bool>> visitados = vector<vector<bool>>(floresta.getLinhas(), vector<bool>(floresta.getColunas(), false));
 
 public:
@@ -22,9 +24,10 @@ public:
     bool dentroDosLimites(int x, int y);
     Posicao escolherMelhorPosicao(const vector<Posicao> &posicoes);
     void dispersaUmidade();
-    void movimentaAnimal();
+    void movimentaAnimal(ostream &arquivo);
     bool estaCercadoPorFogo();
 
+    vector<Posicao> &getCaminhoAnimal() { return caminhoAnimal; }
     string getEstadoAnimal() const { return estadoAnimal; }
     void setEstadoAnimal(const string &estado) { estadoAnimal = estado; }
     Posicao getPosicaoDoAnimal() const { return posicaoAnimal; }

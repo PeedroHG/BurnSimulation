@@ -28,6 +28,10 @@ public:
 
     queue<Posicao> &getFogos() { return fogos; }
     queue<Posicao> &getFogosAtt() { return fogosAtt; }
+    queue<Posicao> getCopiaFogosAtt() const
+    {
+        return fogosAtt;
+    }
 };
 
 #endif

@@ -15,7 +15,8 @@ private:
 public:
     Matriz();
     void carregarArquivo(const string &caminhoArquivo);
-    void imprimirMapa() const;
+    void imprimirMapaTerminal();
+    void imprimirMapaArquivo(ofstream& arquivo);
     vector<vector<int>> &getMapa() { return mapa; }
     int getLinhas() const;
     int getColunas() const;

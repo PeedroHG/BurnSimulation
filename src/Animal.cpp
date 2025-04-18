@@ -22,7 +22,8 @@ bool Animal::dentroDosLimites(int x, int y)
            y >= 0 && y < floresta.getColunas();
 }
 
-bool Animal::estaCercadoPorFogo() {
+bool Animal::estaCercadoPorFogo()
+{
     int x = posicaoAnimal.x;
     int y = posicaoAnimal.y;
 
@@ -32,13 +33,16 @@ bool Animal::estaCercadoPorFogo() {
     int dx[] = {-1, 1, 0, 0}; // cima, baixo, esquerda, direita
     int dy[] = {0, 0, -1, 1};
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++)
+    {
         int nx = x + dx[i];
         int ny = y + dy[i];
 
-        if (dentroDosLimites(nx, ny)) {
+        if (dentroDosLimites(nx, ny))
+        {
             vizinhosValidos++;
-            if (floresta.getMapa()[nx][ny] == 2) {  // se for fogo
+            if (floresta.getMapa()[nx][ny] == 2)
+            { // se for fogo
                 fogoAoRedor++;
             }
         }
@@ -47,7 +51,7 @@ bool Animal::estaCercadoPorFogo() {
     return vizinhosValidos > 0 && fogoAoRedor == vizinhosValidos;
 }
 
-void Animal::movimentaAnimal()
+void Animal::movimentaAnimal(ostream &arquivo)
 {
     auto &mapa = floresta.getMapa();
     visitados[posicaoAnimal.x][posicaoAnimal.y] = true;
@@ -58,7 +62,7 @@ void Animal::movimentaAnimal()
     if (tipoCampoAnterior == 0 && esperaRestante > 0)
     {
         int sorteio = rand() % 2;
-        if(sorteio == 1)
+        if (sorteio == 1)
         {
             esperaRestante--;
             return;
@@ -80,6 +84,14 @@ void Animal::movimentaAnimal()
         }
     }
 
+    if (visaoAnimal.empty())
+    {
+        arquivo << "💀 Animal cercado! Sem opções de movimento. Morreu.\n";
+        this->estadoAnimal = "Morto";
+        mapa[posicaoAnimal.x][posicaoAnimal.y] = 9;
+        return;
+    }
+
     Posicao next = {-1, -1};
 
     next = escolherMelhorPosicao(visaoAnimal);
@@ -95,6 +107,7 @@ void Animal::movimentaAnimal()
 
     // Atualiza o animal
     posicaoAnimal = next;
+    caminhoAnimal.push_back(posicaoAnimal);
     passos++;
 
     if (tipoCampoAnterior == 4)

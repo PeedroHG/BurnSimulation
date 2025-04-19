@@ -118,6 +118,7 @@ void Matriz::imprimirMapaArquivo(ofstream &arquivo)
         arquivo << "\n";
     }
 }
+
 int Matriz::getLinhas() const { return linhas; }
 
 int Matriz::getColunas() const { return colunas; }

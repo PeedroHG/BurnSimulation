@@ -11,7 +11,7 @@ inline constexpr bool VENTO_BAIXO   = false;
 inline constexpr bool VENTO_CIMA    = false;
 
 // False para imprimir a animação do mapa no terminal e true para salvar em um arquivo
-inline constexpr bool OUTPUT_TO_FILE = false;
+inline constexpr bool OUTPUT_TO_FILE = true;
 
 // Tempo de exibição de cada frame em milisegundos
 inline constexpr int TIME_ANIMATION = 500;

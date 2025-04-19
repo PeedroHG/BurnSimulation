@@ -43,6 +43,7 @@ void Simulacao::Simular()
             {
                 animal.movimentaAnimal(arquivo);
                 arquivo << "\nMovimentação do Animal:\n";
+                arquivo << "Posição do Animal: (" << animal.getPosicaoDoAnimal().x << ", " << animal.getPosicaoDoAnimal().y << ")\n";
                 floresta.imprimirMapaArquivo(arquivo);
             }
         }

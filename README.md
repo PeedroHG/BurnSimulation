@@ -160,7 +160,9 @@ void Simulacao::SimularTerminal()
 
 
 
-🧪 Casos de Teste
+### 🧪 Casos de Teste
+
+- [Caso 1 — Animal cercado por fogo e dispersão da umidade](casos_teste/caso1)
 
 
 ### 👨🏻‍💻 Compilação e Execução

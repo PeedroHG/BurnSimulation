@@ -14,7 +14,7 @@ inline constexpr bool VENTO_CIMA    = false;
 inline constexpr bool OUTPUT_TO_FILE = true;
 
 // Tempo de exibição de cada frame em milisegundos
-inline constexpr int TIME_ANIMATION = 500;
+inline constexpr int TIME_ANIMATION = 1000;
 
 #define EMPTY_SYMBOL "⬜"
 #define TREE_SYMBOL "🌳"

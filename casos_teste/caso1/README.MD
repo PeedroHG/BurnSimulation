@@ -13,7 +13,7 @@ inline constexpr bool VENTO_CIMA    = false;
 
 - Na iteração 13 o animal se movimenta para um campo com água 🌊 (4) dispersando a umidade ortogonalmente
 
-- Ainda na iteração 14 depois da movimentação do animal é realizado uma propagação que cerca o animal com chamas 🔥 (2);
+- Ainda na iteração 13 depois da movimentação do animal é realizado uma propagação que cerca o animal com chamas 🔥 (2);
 
 - Na iteração 14 é informado a morte do animal e a propagação continua.
 

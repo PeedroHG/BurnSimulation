@@ -1,7 +1,7 @@
 # BurnSimulation 🔥
 
 <div align="center"> 
-    <img src="./img/gif.gif" width="200" height="200"> 
+    <img src="./img/animacao.gif" width="200" height="200"> 
 </div> 
 
 
@@ -158,12 +158,12 @@ void Simulacao::SimularTerminal()
     - ```make run```: compila (se necessário) e executa a simulação diretamente.
     - ```make full```: limpa, recompila do zero e executa a simulação, garantindo que a execução utilize a versão mais recente do código.
 
-
-
 ### 🧪 Casos de Teste
 
 - [Caso 1 — Animal cercado por fogo e dispersão da umidade](casos_teste/caso1)
-
+- [Caso 2 — Direções do vento](casos_teste/caso2)
+- [Caso 3 — Mecanismo de segunda vida](casos_teste/caso3)
+- [Caso 4 — Restrição de posições já visitadas pelo animal](casos_teste/caso4)
 
 ### 👨🏻‍💻 Compilação e Execução
 

@@ -1,4 +1,4 @@
-# BurnSimulation 🔥
+# Burn Simulation 🔥
 
 <div align="center"> 
     <img src="./img/animacao.gif" width="200" height="200"> 
@@ -68,8 +68,8 @@ O objetivo do trabalho é simular a propagação de um incêndio em uma floresta
 ├── build
 │   ├── app
 │   └── objects
+├── casos_teste
 ├── img
-│   └── gif.gif
 ├── input
 │   └── input.dat
 ├── output
@@ -86,13 +86,14 @@ O objetivo do trabalho é simular a propagação de um incêndio em uma floresta
     ├── Simulacao.hpp
     └── main.cpp
 ```
-### 💡 Implementação
+### 💡 Metodologia
 
-Funções Principais:
+<b>Funções Principais:</b>
 
 ```cpp
 int Incendio::Propagar();
 ```
+- [Propagar()](src/Incendio.cpp): linha 61 a 101
 - Simula a propagação do fogo utilizando o conceito de BFS, explorando em largura.
 - Essa função trabalha em conjunto com:
     - ```void Queimar();```
@@ -108,6 +109,7 @@ int Incendio::Propagar();
 ```cpp
 void Animal::movimentaAnimal(ostream &arquivo)
 ```
+- [movimentaAnimal()](src/Animal.cpp): linha 54 a 118
 - Função responsável pela movimentação do animal
 - Aleatoriza a escolha do animal entre permanecer parado no ⬜ (0) em até no máximo 2 vezes
 - Recebe uma saida como parâmetro
@@ -126,6 +128,7 @@ void Animal::movimentaAnimal(ostream &arquivo)
 ```cpp
 void Simulacao::Simular()
 ```
+- [Simular()](src/Simulacao.cpp): linha 15 a 101
 - Função que gerencia as iterações entre movimentação do animal e propagação do fogo
 - Responsável pelas regras de implementação, como:
     - Sistama de turno: animal se movimenta depois o fogo propaga
@@ -141,11 +144,56 @@ void Simulacao::Simular()
 ```cpp
 void Simulacao::SimularTerminal()
 ```
+- [Simular()](src/Simulacao.cpp): linha 103 a 171
 - Função semelhante a ```Simular()``` porém tem como saída o próprio terminal, gerando uma animação da simulação
 
 - A escolha entre simular no terminal ou gravar em arquivo é controlada pela variável OUTPUT_TO_FILE, localizada no arquivo [Config.hpp](src/Config.hpp).
 
 - Caso a simulação seja exibida no terminal (OUTPUT_TO_FILE = false), o tempo entre cada frame é definido pela variável TIME_ANIMATION, no mesmo arquivo.
+
+A simulação é realizada a partir das funções descritas anteriormente, organizadas dentro dos métodos ```Simular()``` e ```SimularTerminal()```.
+O funcionamento geral do processo pode ser visualizado no fluxograma apresentado a seguir.
+
+<b>Fluxograma:</b>
+
+```mermaid
+flowchart TD
+    A[Início da Simulação] --> B[Abrir arquivo output.dat]
+    B --> C[Imprimir mapa inicial]
+
+    C --> D[Início do loop de iterações]
+    D --> E{Animal está vivo?}
+
+    E -- Não --> F[Animal não se move]
+    E -- Sim --> G{Animal está cercado por fogo?}
+
+    G -- Sim --> H[Animal morre 💀]
+    H --> I[Marca posição do animal como 9]
+
+    G -- Não --> J[Animal se move]
+    J --> K[Imprimir mapa atualizado]
+
+    F --> L[Propagação do fogo 🔥]
+    I --> L
+    K --> L
+
+    L --> M[Imprimir focos atualizados]
+    M --> N{Fogo atingiria o animal?}
+
+    N -- Sim --> O[Ativa vida extra ⚡]
+    O --> P[Animal tenta fugir novamente]
+    P --> Q[Atualiza mapas e ignora resto da iteração]
+    Q --> D
+
+    N -- Não --> R{Ainda há fogo?}
+    R -- Não --> S[Encerrar simulação 🔚]
+    S --> T[Imprimir relatório final]
+    T --> U[Fim]
+
+    R -- Sim --> D
+```
+
+
 
 
 ### 📜 Arquivos Adicionais
@@ -157,13 +205,6 @@ void Simulacao::SimularTerminal()
     - ```make```: compila o código-fonte e gera o executável da simulação.
     - ```make run```: compila (se necessário) e executa a simulação diretamente.
     - ```make full```: limpa, recompila do zero e executa a simulação, garantindo que a execução utilize a versão mais recente do código.
-
-### 🧪 Casos de Teste
-
-- [Caso 1 — Animal cercado por fogo e dispersão da umidade](casos_teste/caso1)
-- [Caso 2 — Direções do vento](casos_teste/caso2)
-- [Caso 3 — Mecanismo de segunda vida](casos_teste/caso3)
-- [Caso 4 — Restrição de posições já visitadas pelo animal](casos_teste/caso4)
 
 ### 👨🏻‍💻 Compilação e Execução
 
@@ -192,9 +233,27 @@ x x x x x
 ```sh
 make full
 ```
+
+### 🧪 Casos de Teste
+
+- [Caso 1 — Animal cercado por fogo e dispersão da umidade](casos_teste/caso1)
+- [Caso 2 — Direções do vento](casos_teste/caso2)
+- [Caso 3 — Mecanismo de segunda vida](casos_teste/caso3)
+- [Caso 4 — Restrição de posições já visitadas pelo animal](casos_teste/caso4)
+
 ### 🔚 Conclusão
 
-A implementação se mostrou eficiente na simulação de incêndios em ambientes controlados. O uso de BFS garantiu que o fogo se propagasse de forma realista e previsível, e a lógica do animal trouxe um desafio adicional, simulando comportamentos adaptativos.
+A simulação desenvolvida demonstrou ser aceitável na modelagem da propagação de incêndios exponencias em uma matriz.
+
+- No Caso 1, foi possível observar que priorizar a movimentação em direção ao campo de água 🌊 (4) nem sempre garante a sobrevivência do animal, pois, nesta situação, essa estratégia acabou colocando-o em perigo.
+
+- No Caso 2, a configuração das direções do vento alterou significativamente o comportamento do fogo, aumentando a chance de sobrevivência do animal. Ao limitar o vento a apenas duas direções e o foco inicial estando no meio da matriz, aproximadamente 25% do mapa foi queimado, preservando cerca de 75% de áreas seguras.
+
+- No Caso 4, a restrição de movimentos para posições já visitadas influenciou diretamente na morte do animal, reduzindo seu tempo de vida. A implementação dessa funcionalidade, onde o animal não pode passar por onde já passou, é uma medida extrema e não reflete a realidade. Essa abordagem, embora válida para simulações simplificadas, limita a complexidade do comportamento animal no contexto da simulação.
+
+De forma geral, o uso de busca em largura (BFS) garantiu uma propagação do fogo consistente e previsível, enquanto a lógica para a movimentação do animal, embora aceitável para uma simulação, ainda precisa ser mais elaborada para refletir comportamentos mais realistas e dinâmicos.
+
+Os resultados indicam que ajustes nos parâmetros, como o número máximo de interações ou a configuração do vento, podem influenciar profundamente os desfechos da simulação, abrindo espaço para futuros aprimoramentos e análises mais detalhadas.
 
 ### 🚀 Melhorias Futuras
 
@@ -206,3 +265,5 @@ A implementação se mostrou eficiente na simulação de incêndios em ambientes
     - Variação climática.
     - Intensidade e direção dinâmica do vento.
     - Barreiras naturais.
+
+- Otimizar o fluxo da simulação, removendo redundâncias e validações desnecessárias.

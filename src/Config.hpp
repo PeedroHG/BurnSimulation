@@ -12,7 +12,7 @@ inline constexpr bool VENTO_CIMA    = false;
 
 // False -> Terminal
 // True  -> Arquivo
-inline constexpr bool OUTPUT_TO_FILE = true;
+inline constexpr bool OUTPUT_TO_FILE = false;
 
 // Tempo de exibição de cada frame em milisegundos
 inline constexpr int TIME_ANIMATION = 500;
@@ -24,6 +24,16 @@ inline constexpr int TIME_ANIMATION = 500;
 #define WATER_SYMBOL "🌊"
 #define ANIMAL_SYMBOL "🐇"
 #define DEAD_ANIMAL_SYMBOL "💀"
-#define VISITED_SYMBOL "❌"
+
+// Use se o seu terminal não renderizar emojis
+/* 
+    #define EMPTY_SYMBOL "0"
+    #define TREE_SYMBOL "1"
+    #define BURNING_SYMBOL "2"
+    #define BURNT_SYMBOL "3"
+    #define WATER_SYMBOL "4"
+    #define ANIMAL_SYMBOL "A"
+    #define DEAD_ANIMAL_SYMBOL "D"
+*/
 
 #endif 
